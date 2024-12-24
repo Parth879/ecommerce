@@ -1,46 +1,136 @@
 {% extends 'base.html' %}
-{% load static %}
 {% block content %}
 
-
-<section class="section-intro padding-y-sm">
-    <div class="container">
-
-        <div class="intro-banner-wrap">
-            <img src="{% static 'images/banners/1.jpg' %}" class="img-fluid rounded">
-        </div>
-
-    </div> <!-- container //  -->
-</section>
-<!-- ========================= SECTION MAIN END// ========================= -->
-
-<!-- ========================= SECTION  ========================= -->
-<section class="section-name padding-y-sm">
-    <div class="container">
-
-        <header class="section-heading">
-            <a href="./store.html" class="btn btn-outline-primary float-right">See all</a>
-            <h3 class="section-title">Popular products</h3>
-        </header><!-- sect-heading -->
-
-
-        <div class="row">
-            {% for product in product %}
-            <div class="col-md-3">
-                <div class="card card-product-grid">
-                    <a href="./product-detail.html" class="img-wrap"> <img src="{{product.product_image.url}}"> </a>
-                    <figcaption class="info-wrap">
-                        <a href="./product-detail.html" class="title">{{product.product_name}}</a>
-                        <div class="price mt-1">{{product.product_price}}</div> <!-- price-wrap.// -->
-                    </figcaption>
+<!--/main-slider -->
+<section class="w3l-main-slider banner-slider position-relative" id="home">
+    <div class="owl-one owl-carousel owl-theme">
+        <div class="item">
+            <div class="slider-info banner-view banner-top1">
+                <div class="container">
+                    <div class="banner-info header-hero-19">
+                        <h5>Up To 60% Off Now</h5>
+                        <h3 class="title-hero-19">Mid Season Sale 40%</h3>
+                        <p>Final Clearance: Take 20% off ‘Sale Must-Haves'</p>
+                        <a href="products.html" class="btn btn-style btn-primary mt-sm-5 mt-4">Start Shopping <i
+                                class="fas fa-arrow-right ms-lg-3 ms-2"></i></a>
+                    </div>
                 </div>
-            </div> <!-- col.// -->
-            {% endfor %}
-        </div> <!-- row.// -->
-
-    </div><!-- container // -->
+            </div>
+        </div>
+        <div class="item">
+            <div class="slider-info banner-view banner-top2">
+                <div class="container">
+                    <div class="banner-info header-hero-19">
+                        <h5>Fall Summer Clearance</h5>
+                        <h3 class="title-hero-19">Enjoy The Season Sale</h3>
+                        <p>Final Clearance: Take 20% off ‘Sale Must-Haves'</p>
+                        <a href="products.html" class="btn btn-style btn-primary mt-sm-5 mt-4">Start Shopping <i
+                                class="fas fa-arrow-right ms-lg-3 ms-2"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <div class="slider-info banner-view banner-top3">
+                <div class="container">
+                    <div class="banner-info header-hero-19">
+                        <h5>Up To 60% Off Now</h5>
+                        <h3 class="title-hero-19">Mid Season Sale 40%</h3>
+                        <p>Final Clearance: Take 20% off ‘Sale Must-Haves'</p>
+                        <a href="products.html" class="btn btn-style btn-primary mt-sm-5 mt-4">Start Shopping <i
+                                class="fas fa-arrow-right ms-lg-3 ms-2"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <div class="slider-info banner-view banner-top4">
+                <div class="container">
+                    <div class="banner-info header-hero-19">
+                        <h5>Fall Summer Clearance</h5>
+                        <h3 class="title-hero-19">Enjoy The Season Sale</h3>
+                        <p>Final Clearance: Take 20% off ‘Sale Must-Haves'</p>
+                        <a href="products.html" class="btn btn-style btn-primary mt-sm-5 mt-4">Start Shopping <i
+                                class="fas fa-arrow-right ms-lg-3 ms-2"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
-<!-- ========================= SECTION  END// ========================= -->
+<!-- //main-slider -->
 
+<!-- /Free-Ship-->
+<section class="w3free-ship text-center py-md-5 py-4">
+    <h2>Free Shipping For You Till Midnight <i class="fas fa-shipping-fast ms-lg-3"></i></h2>
+</section>
+<!--//Free-Ship-->
+
+<section class="w3l-witemshny-main py-5">
+    <div class="container py-md-4">
+        <h3 class="title-w3l">Deals Of The Day</h3>
+        <!--/row-1-->
+        <div class="witemshny-grids row mt-lg-3">
+            {% for i in product %}
+            <div class="col-xl-2 col-md-4 col-6 product-incfhny mt-4">
+                <div class="weitemshny-grid oposition-relative">
+                    <a href="products-1.html" class="d-block zoom"><img src="{{i.product_image.url}}" alt=""
+                            class="img-fluid news-image"></a>
+                    <div class="witemshny-inf">
+                    </div>
+                </div>
+                <h4 class="gdnhy-1 mt-4"><a href="products-1.html">{{i.product_name}}</a>
+                </h4>
+            </div>
+            {% endfor %}
+        </div>
+        <!--//row-1-->
+
+    </div>
+</section>
+<!--/w3l-ecommerce-main-->
+<div style="margin: 8px auto; display: block; text-align:center;">
+
+    <!---728x90--->
+
+
+</div>
+
+<section class="w3l-ecommerce-main">
+    <!-- /products-->
+    <div class="ecom-contenthny py-5">
+        <div class="container py-lg-5">
+            <h3 class="title-w3l">Shop With Us</h3>
+            <p class="">Handpicked Favourites just for you</p>
+            <!-- /row-->
+            <div class="ecom-products-grids row mt-lg-4 mt-3">
+            {% for i in product %}
+
+                <div class="col-lg-3 col-6 product-incfhny mt-4">
+                    <div class="product-grid2 shopv">
+                        <div class="product-image2">
+                            <a href="product-single.html">
+                                <img class="pic-1 img-fluid radius-image" src="{{i.product_image.url}}">
+                                <img class="pic-2 img-fluid radius-image" src="{{i.product_image.url}}">
+                            </a>
+                            
+                            <div class="shopv single-item">
+                                    <button type="submit" class="shopv-cart pshopv-cart add-to-cart">
+                                        Add to Cart
+                                    </button>
+                            </div>
+                        </div>
+                        <div class="product-content">
+                            <h3 class="title"><a href="product-single.html">{{i.product_name}}</a></h3>
+                            <span class="price">{{i.product_price}}</span>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+                
+            </div>
+        </div>
+    </div>
+</section>
 
 {% endblock %}
