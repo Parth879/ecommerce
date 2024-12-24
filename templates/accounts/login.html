@@ -10,52 +10,29 @@
         <!--form-stars-here-->
         <div class="form-wrapv">
 
-            <h2>Get Register</h2>
+            <h2>Get Login</h2>
 
 
-            <form action="{% url 'register' %}" method="post">
+            <form action="" method="post">
                 {% csrf_token %}
                 <div class="form-sub-w3">
-                    {{form.first_name}}
-                    <div class="icon-w3">
-                        <span class="fas fa-user" aria-hidden="true"></span>
-                    </div>
-                </div>
-                <div class="form-sub-w3">
-                    {{form.last_name}}
-                    <div class="icon-w3">
-                        <span class="fas fa-user" aria-hidden="true"></span>
-                    </div>
-                </div>
-                <div class="form-sub-w3">
-                    {{form.phone_number}}
-                    <div class="icon-w3">
-                        <span class="fas fa-user" aria-hidden="true"></span>
-                    </div>
-                </div>
-                <div class="form-sub-w3">
-                    {{form.email}}
+                    <input type="email" name="Username" placeholder="Username " required="" />
                     <div class="icon-w3">
                         <span class="fas fa-user" aria-hidden="true"></span>
                     </div>
                 </div>
                
                 <div class="form-sub-w3">
-                    {{form.password}}
+                    <input type="password" name="Password" placeholder="Password" required="" />
                     <div class="icon-w3">
                         <span class="fas fa-unlock-alt" aria-hidden="true"></span>
                     </div>
                 </div>
                
-                <div class="form-sub-w3">
-                    {{form.confirm_password}}
-                    <div class="icon-w3">
-                        <span class="fas fa-unlock-alt" aria-hidden="true"></span>
-                    </div>
-                </div>
+                
                 <div class="form-sub-content">
                     <p class="forgot-w3ls">Forgot Password?<a class href="#"> Click here</a></p>
-                    <p class="forgot-w3ls1">New User? <a class href="{% url 'login' %}">Login here</a></p>
+                    <p class="forgot-w3ls1">New User? <a class href="{% url 'register' %}">Register Here</a></p>
                 </div>
                 <div class="submit-button text-center">
                     <button class="btn btn-style btn-primary">Login Now</button>
