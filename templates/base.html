@@ -6,11 +6,19 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>ShoppyKart - Ecommerce Category Bootstrap Responsive Template | Home :: W3layouts </title>
+    <title>Ecommerce Site </title>
+
     <!-- google fonts -->
     <link href="http://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@300;400;700&amp;display=swap" rel="stylesheet">
     <!-- Template CSS -->
     <link rel="stylesheet" href="{% static 'assets/css/style-liberty.css' %}">
+
+     <!--=========================== this is alertify message link css ===========================-->
+     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+     <!-- Default theme -->
+     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
+     <!-- =======================================end here ===========================================-->
+ 
 </head>
 
 <body>
@@ -20,7 +28,7 @@
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light stroke py-lg-0">
                 <h1><a class="navbar-brand pe-xl-5 pe-lg-4" href="index.html">
-                        <span class="w3yellow">Shoppy</span>Kart
+                        <span class="w3yellow">Shoppy</span>Kart {{request.user.first_name}}
                     </a></h1>
                 <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false"
@@ -121,6 +129,7 @@
             </nav>
         </div>
     </header>
+
     <!--//Header-->
     <section class="w3mid-gap"></section>
     <!--/Banner-Start-->
@@ -253,6 +262,8 @@
         </script>
         <!-- //move top -->
     </footer>
+
+
     <!-- Template JavaScript -->
     <script src="{% static 'assets/js/jquery-3.3.1.min.js' %}"></script>
     <script src="{% static 'assets/js/theme-change.js' %}"></script>
@@ -422,9 +433,15 @@
     <!-- //bootstrap -->
     <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
 
+    <!-- Alertify Js Start -->
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+    <script type="">
+        alertify.set('notifier','position', 'top-right');
+        {% for msg in messages %}
+            alertify.success('{{ msg }}');
+        {% endfor %}
+    </script>
+    <!-- Alertify Js End -->
 
 </body>
-
-
-
 </html>

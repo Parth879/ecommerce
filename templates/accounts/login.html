@@ -5,15 +5,29 @@
 
     <!---728x90--->
 </div>
+
+{% if request.GET.command == 'verification' %}
+<section class="w3l-forml-main ">
+    <div class="form-hnyv-sec py-sm-5 py-3">
+        <div class="form-wrapv">
+
+            You Are Already Register with this mail [{{request.GET.email}}] Plz Verify Your Account And Login
+            open Your Mail
+            <a href="https://mail.google.com/">{{request.GET.email}}</a>
+
+        </div>
+        <button type="button">Resend Email to [{{request.GET.email}}]</button>
+    </div>
+    <!-- //coming -->
+</section>
+
+{% else %}
 <section class="w3l-forml-main ">
     <div class="form-hnyv-sec py-sm-5 py-3">
         <!--form-stars-here-->
         <div class="form-wrapv">
-
             <h2>Get Login</h2>
-
-
-            <form action="" method="post">
+            <form action="" method="POST">
                 {% csrf_token %}
                 <div class="form-sub-w3">
                     <input type="email" name="Username" placeholder="Username " required="" />
@@ -21,34 +35,27 @@
                         <span class="fas fa-user" aria-hidden="true"></span>
                     </div>
                 </div>
-               
                 <div class="form-sub-w3">
                     <input type="password" name="Password" placeholder="Password" required="" />
                     <div class="icon-w3">
                         <span class="fas fa-unlock-alt" aria-hidden="true"></span>
                     </div>
                 </div>
-               
-                
                 <div class="form-sub-content">
                     <p class="forgot-w3ls">Forgot Password?<a class href="#"> Click here</a></p>
                     <p class="forgot-w3ls1">New User? <a class href="{% url 'register' %}">Register Here</a></p>
                 </div>
                 <div class="submit-button text-center">
                     <button class="btn btn-style btn-primary">Login Now</button>
-
                 </div>
             </form>
-
         </div>
         <!--//form-ends-here-->
     </div>
     <!-- //coming -->
 </section>
-<div style="margin: 8px auto; display: block; text-align:center;">
+{% endif %}
 
-    <!---728x90--->
-
-</div>
+<div style="margin: 8px auto; display: block; text-align:center;"><!---728x90---></div>
 
 {% endblock %}

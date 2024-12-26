@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from account.forms import RegistrationForm
 from account.models import Account
 from django.contrib import auth
+from django.contrib import messages
 
 # Email
 from django.core.mail import EmailMessage
@@ -11,7 +12,6 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 
-from django.http import HttpResponse
 
 # Create your views here.
 
@@ -29,22 +29,31 @@ def register(request):
             user = Account.objects.create_user(first_name=first_name,last_name=last_name,email=email,password=password,username=username)
             user.phone_number = phone_number
             user.save()
+
+            context = {
+                    'user':user,
+                    'domain' : current_side,
+                    'uid' : urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token' : default_token_generator.make_token(user),
+                }
             
-            email_subject = "Please Activate Your Account."
-            current_side = get_current_site(request)
+            try:
+                email_subject = "Please Activate Your Account."
+                current_side = get_current_site(request)
 
-            message = render_to_string('accounts/verfication_mail.html',{
-                'user':user,
-                'domain' : current_side,
-                'uid' : urlsafe_base64_encode(force_bytes(user.pk)),
-                'token' : default_token_generator.make_token(user),
-            })
+                message = render_to_string('accounts/verfication_mail.html',context)
+                send_email = EmailMessage(email_subject,message,to=[email])
+                send_email.send()
+            except:
+                pass
 
-            send_email = EmailMessage(email_subject,message,to=[email])
-            send_email.send()
-
-            return redirect('index')
-        
+            
+            return redirect('/account/login/?command=verification&email='+email)
+        else:
+            
+            messages.error(request,"User is already register")
+            return redirect('/account/register/?&email='+email+'&uid='+context.uid)
+            return register('register')
     else:
         form = RegistrationForm()
 
@@ -63,8 +72,13 @@ def login(request):
         
         if user is not None:
             auth.login(request,user)
+            messages.success(request,"Login Success.")
             return redirect('index')
-        
+        else:
+            messages.success(request,"Login Again.")
+            return redirect('login')
+
+    
     return render(request,'accounts/login.html')
 
 
