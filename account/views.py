@@ -24,35 +24,29 @@ def register(request):
             phone_number = form.cleaned_data['phone_number']
             email = form.cleaned_data.get('email')
             password = form.cleaned_data['password']
-            confirm_password = form.cleaned_data['confirm_password']
             username = email.split("@")[0]
             user = Account.objects.create_user(first_name=first_name,last_name=last_name,email=email,password=password,username=username)
             user.phone_number = phone_number
             user.save()
 
-            context = {
+            try:
+                email_subject = "Please Activate Your Account."
+                current_side = get_current_site(request)
+                context = {
                     'user':user,
                     'domain' : current_side,
                     'uid' : urlsafe_base64_encode(force_bytes(user.pk)),
                     'token' : default_token_generator.make_token(user),
                 }
-            
-            try:
-                email_subject = "Please Activate Your Account."
-                current_side = get_current_site(request)
-
                 message = render_to_string('accounts/verfication_mail.html',context)
                 send_email = EmailMessage(email_subject,message,to=[email])
                 send_email.send()
             except:
                 pass
-
-            
             return redirect('/account/login/?command=verification&email='+email)
         else:
             
             messages.error(request,"User is already register")
-            return redirect('/account/register/?&email='+email+'&uid='+context.uid)
             return register('register')
     else:
         form = RegistrationForm()

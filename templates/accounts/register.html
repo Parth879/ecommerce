@@ -11,7 +11,9 @@
         <div class="form-wrapv">
 
             <h2>Get Register</h2>
-
+            
+            {{ form.email.errors }}
+            {{ form.non_field_errors }}
 
             <form action="{% url 'register' %}" method="post">
                 {% csrf_token %}
