@@ -44,22 +44,20 @@
                             <div class="single-gd mb-5">
                                 <h4>Product Categories</h4>
                                 <ul class="list-group single">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        Accessories
-                                        <span class="badge badge-primary badge-pill">14</span>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        Suits
-                                        <span class="badge badge-primary badge-pill">18</span>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        Footwear
-                                        <span class="badge badge-primary badge-pill">12</span>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        Blazers
-                                        <span class="badge badge-primary badge-pill">10</span>
-                                    </li>
+                                    <a href="{% url 'store' %}">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            All Product
+                                            <span class="badge badge-primary badge-pill">14</span>
+                                        </li>
+                                    </a>
+                                    {% for cate_list in links %}
+                                    <a href="{{cate_list.get_url}}">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            {{cate_list.category_name}}
+                                            <span class="badge badge-primary badge-pill">14</span>
+                                        </li>
+                                    </a>
+                                    {% endfor %}
                                 </ul>
                             </div>
                             <div class="single-gd mb-5">
@@ -88,7 +86,7 @@
                                 <!--//Gallery-imgs-->
                             </div>
 
-                            <div class="single-gd mb-5">
+                            <!-- <div class="single-gd mb-5">
                                 <h4>Discount </h4>
                                 <div classes="box-hny">
                                     <label class="containerhny-checkbox">15% or More
@@ -207,7 +205,7 @@
 
                                 </div>
 
-                            </div>
+                            </div> -->
                         </div>
                     </aside>
                     <!--//ecommerce-left-hny-->
@@ -216,7 +214,7 @@
                 <div class="ecommerce-right-hny col-lg-8">
                     <div class="row ecomhny-topbar">
                         <div class="col-6 ecomhny-result">
-                            <h4 class="ecomhny-result-count"> Showing all 9 Results</h4>
+                            <h4 class="ecomhny-result-count"> Showing  {{product_count}} Results</h4>
                         </div>
                         <div class="col-6 ecomhny-topbar-ordering">
 
@@ -240,40 +238,26 @@
                         <div class="col-lg-4 col-6 product-incfhny mt-4">
                             <div class="product-grid2 shopv">
                                 <div class="product-image2">
-                                    <a href="product-single.html">
+                                    <a href="{{product.get_url}}">
                                         <img class="pic-1 img-fluid radius-image" src="{{product.product_image.url}}">
                                         <img class="pic-2 img-fluid radius-image" src="{{product.product_image.url}}">
                                     </a>
                                     <ul class="social">
                                         <li><a href="#" data-tip="Quick View"><span class="fa fa-eye"></span></a>
-                                        </li>
-
-                                        <li><a href="products.html" data-tip="Add to Cart"><span
-                                                    class="fa fa-shopping-bag"></span></a>
-                                        </li>
+                                        </li>                                        
                                     </ul>
-                                    <div class="shopv single-item">
-                                        <form action="#" method="post">
-                                            <input type="hidden" name="cmd" value="_cart">
-                                            <input type="hidden" name="add" value="1">
-                                            <input type="hidden" name="shopv_item" value="Checkered Casual Shirt">
-                                            <input type="hidden" name="amount" value="899.99">
-                                            <button type="submit" class="shopv-cart pshopv-cart add-to-cart">
-                                                Add to Cart
-                                            </button>
-                                        </form>
-                                    </div>
+                                    
                                 </div>
                                 <div class="product-content">
-                                    <h3 class="title"><a href="product-single.html">Checkered Casual Shirt </a></h3>
-                                    <span class="price"><del>$975.00</del>$899.99</span>
+                                    <h3 class="title"><a href="product-single.html">{{product.product_name}}</a></h3>
+                                    <span class="price">{{product.product_price}}</span>
                                 </div>
                             </div>
                         </div>
                         {% endfor %}
-                      
+
                     </div>
-                    
+
                     <div class="pagination">
                         <ul>
                             <li class="prev"><a href="#page-number"><span class="fa fa-angle-double-left"></span></a>
