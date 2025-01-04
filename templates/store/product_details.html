@@ -58,23 +58,7 @@
                         </ul>
                         <div class="clearfix"></div>
                     </div>
-                    <div class="eco-buttons mt-5 d-flex">
-
-                        <div class="shopv single-item">
-                            <form action="#" method="post">
-                                <input type="hidden" name="cmd" value="_cart">
-                                <input type="hidden" name="add" value="1">
-                                <input type="hidden" name="shopv_item" value="Cotton Flared Kurta">
-                                <input type="hidden" name="amount" value="599.99">
-                                <button type="submit"
-                                    class="shopv-cart pshopv-cart add-to-cart btn btn-style btn-primary">
-                                    Add to Cart
-                                </button>
-                            </form>
-                        </div>
-                        <div class="buyhny-now"> <a href="#buy" class="btn btn-style btn-primary">Buy Now </a></div>
-
-                    </div>
+                    
                 </div>
                 <div class="col-lg-7 single-right-left ps-lg-5">
                     <h3>{{single_product.product_name}}
@@ -89,6 +73,14 @@
                     <div class="desc_single mb-4">
                         <h5>Description:</h5>
                         <p>{{single_product.product_discription}}</p>
+                    </div>
+                    <div class="eco-buttons mt-5 d-flex">
+
+                        <div class="shopv single-item">
+                            
+                            <a href="{% url 'add_cart' single_product.id %}" class="btn btn-style btn-primary">Add to Cart </a>
+                        </div>
+
                     </div>
                     <!-- <div class="description-apt d-grid mb-4">
                         <div class="occasional">
