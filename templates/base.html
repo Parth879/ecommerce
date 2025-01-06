@@ -13,12 +13,12 @@
     <!-- Template CSS -->
     <link rel="stylesheet" href="{% static 'assets/css/style-liberty.css' %}">
 
-     <!--=========================== this is alertify message link css ===========================-->
-     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
-     <!-- Default theme -->
-     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
-     <!-- =======================================end here ===========================================-->
- 
+    <!--=========================== this is alertify message link css ===========================-->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+    <!-- Default theme -->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
+    <!-- =======================================end here ===========================================-->
+
 </head>
 
 <body>
@@ -42,7 +42,7 @@
                             <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="about.html">About</a>
+                            <a class="nav-link" href="{% url 'store' %}">Store</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#Pages" id="navbarDropdown" role="button"
@@ -51,7 +51,8 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 {% for category in links %}
-                                <li><a class="dropdown-item pt-2" href="{{category.get_url}}">{{category.category_name}}</a></li>
+                                <li><a class="dropdown-item pt-2"
+                                        href="{{category.get_url}}">{{category.category_name}}</a></li>
                                 {% endfor %}
                             </ul>
                         </li>
@@ -79,9 +80,9 @@
                             <div id="search" class="pop-overlay">
                                 <div class="popup">
                                     <h3 class="title-w3l two mb-4 text-left">Search Here</h3>
-                                    <form action="#" method="GET" class="search-box d-flex position-relative">
-                                        <input type="search" placeholder="Enter Keyword here" name="search"
-                                            required="required" autofocus="">
+                                    <form action="{% url 'search' %}" method="GET"
+                                        class="search-box d-flex position-relative">
+                                        <input type="search" placeholder="Enter Keyword here" name="keyword">
                                         <button type="submit" class="btn"><span class="fas fa-search"
                                                 aria-hidden="true"></span></button>
                                     </form>
@@ -96,18 +97,13 @@
                 </div>
                 <ul class="header-search me-lg-4 d-flex">
                     <li class="get-btn me-2">
-                        <a href="{% url 'login' %}" class="btn btn-style btn-primary" title="search"><i
-                                class="fas fa-user me-lg-2"></i> <span class="btn-texe-inf">Login</span></a>
+                        <a href="{% url 'login' %}" class="btn btn-style btn-primary" title="search">
+                            <i class="fas fa-user me-lg-2"></i> <span class="btn-texe-inf">Login</span></a>
                     </li>
                     <li class="shopvcart galssescart2 cart cart box_1 get-btn">
-                        <form action="#" method="post" class="last">
-                            <input type="hidden" name="cmd" value="_cart">
-                            <input type="hidden" name="display" value="1">
-                            <button class="top_shopv_cart" type="submit" name="submit" value="">
-                                <span class="fas fa-shopping-bag me-lg-2"></span> <span class="btn-texe-inf">Cart</span>
-
-                            </button>
-                        </form>
+                        <a href="{% url 'cart' %}" class="btn btn-style btn-primary">
+                            <span class="fas fa-shopping-bag me-lg-2"></span> <span class="btn-texe-inf">Cart</span>
+                        </a>
                     </li>
                 </ul>
                 <!--//search-right-->
@@ -133,10 +129,10 @@
     <!--//Header-->
     <section class="w3mid-gap"></section>
     <!--/Banner-Start-->
-    
-     
-    
-   
+
+
+
+
     {% block content %}
     {% endblock %}
     <!--//w3l-subscription-infhny-->
@@ -444,4 +440,5 @@
     <!-- Alertify Js End -->
 
 </body>
+
 </html>

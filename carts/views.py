@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from store.models import Product
 from django.http import HttpResponse
 from carts.models import *
@@ -32,16 +32,41 @@ def add_cart(request,product_id):
 
     return redirect('cart')
 
+def remove_cart(request,product_id,cart_item_id):
+    products = get_object_or_404(Product,id=product_id)
+    
+    carts = Cart.objects.get(cart_id=_cart_id(request))
+    cart_item = CartItem.objects.get(product=products,cart=carts,id=cart_item_id)
+    if cart_item.quantity > 1:
+        cart_item.quantity -=1
+        cart_item.save()
+        return redirect('cart')
+    else:
+        cart_item.delete()
+        return redirect('cart')
+
+def remove_cart_item(request,product_id,cart_item_id):
+    products = get_object_or_404(Product,id=product_id)
+    carts = Cart.objects.get(cart_id=_cart_id(request))
+    cart_item = CartItem.objects.get(product=products, cart=carts, id=cart_item_id)
+    cart_item.delete()
+    return redirect('cart')
+
 def cart(request):
     total = 0
 
     cart_items = CartItem.objects.filter(cart__cart_id=_cart_id(request))
+    for i in cart_items:
+        total += (i.product.product_price * i.quantity)
     
-    # total += (cart_items.product.product_price * cart_items.quantity)
-    
+    tax = (2 * total)/100
+    grand_total = total + tax
+   
     context = {
         'cart_items' : cart_items,
-        'total':total
+        'total':total,
+        'tax': tax,
+        'grand_total': grand_total,
     }
 
     return render(request,'store/cart.html',context)

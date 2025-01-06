@@ -74,12 +74,12 @@
             {% for i in product %}
             <div class="col-xl-2 col-md-4 col-6 product-incfhny mt-4">
                 <div class="weitemshny-grid oposition-relative">
-                    <a href="products-1.html" class="d-block zoom"><img src="{{i.product_image.url}}" alt=""
+                    <a href="{{i.get_url}}" class="d-block zoom"><img src="{{i.product_image.url}}" alt=""
                             class="img-fluid news-image"></a>
                     <div class="witemshny-inf">
                     </div>
                 </div>
-                <h4 class="gdnhy-1 mt-4"><a href="products-1.html">{{i.product_name}}</a>
+                <h4 class="gdnhy-1 mt-4"><a href="{{i.get_url}}">{{i.product_name}}</a>
                 </h4>
             </div>
             {% endfor %}
@@ -109,7 +109,7 @@
                 <div class="col-lg-3 col-6 product-incfhny mt-4">
                     <div class="product-grid2 shopv">
                         <div class="product-image2">
-                            <a href="product-single.html">
+                            <a href="{{i.get_url}}">
                                 <img class="pic-1 img-fluid radius-image" src="{{i.product_image.url}}">
                                 <img class="pic-2 img-fluid radius-image" src="{{i.product_image.url}}">
                             </a>
@@ -121,7 +121,7 @@
                             </div>
                         </div>
                         <div class="product-content">
-                            <h3 class="title"><a href="product-single.html">{{i.product_name}}</a></h3>
+                            <h3 class="title"><a href="{{i.get_url}}">{{i.product_name}}</a></h3>
                             <span class="price">{{i.product_price}}</span>
                         </div>
                     </div>

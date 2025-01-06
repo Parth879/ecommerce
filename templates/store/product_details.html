@@ -40,8 +40,8 @@
 
                         <ul class="slides">
                             <li data-thumb="assets/images/cart1.jpg">
-                                <div class="thumb-image"> <img src="{{single_product.product_image.url}}" data-imagezoom="true"
-                                        class="img-fluid radius-image" alt=" "> </div>
+                                <div class="thumb-image"> <img src="{{single_product.product_image.url}}"
+                                        data-imagezoom="true" class="img-fluid radius-image" alt=" "> </div>
                             </li>
                             <!-- <li data-thumb="assets/images/cart2.jpg">
                                 <div class="thumb-image"> <img src="{{single_product.product_image.url}}" data-imagezoom="true"
@@ -58,7 +58,7 @@
                         </ul>
                         <div class="clearfix"></div>
                     </div>
-                    
+
                 </div>
                 <div class="col-lg-7 single-right-left ps-lg-5">
                     <h3>{{single_product.product_name}}
@@ -68,7 +68,7 @@
                             <span class="item_price">{{single_product.product_price}}</span>
                         </h6>
                     </div>
-                    
+
                     <br>
                     <div class="desc_single mb-4">
                         <h5>Description:</h5>
@@ -76,10 +76,20 @@
                     </div>
                     <div class="eco-buttons mt-5 d-flex">
 
-                        <div class="shopv single-item">
-                            
-                            <a href="{% url 'add_cart' single_product.id %}" class="btn btn-style btn-primary">Add to Cart </a>
-                        </div>
+                        {% if single_product.product_stock <= 0 %} 
+                        <h5 class="item_price">Out Of Stock</h5>
+                            {% else %}
+                            <div class="shopv single-item">
+                                {% if in_cart %}
+                                <a href="{% url 'cart'  %}" class="btn btn-style btn-primary">View Cart
+                                </a>
+                                {% else %}
+                                <a href="{% url 'add_cart' single_product.id %}" class="btn btn-style btn-primary">Add
+                                    to
+                                    Cart </a>
+                                {% endif %}
+                            </div>
+                            {% endif %}
 
                     </div>
                     <!-- <div class="description-apt d-grid mb-4">
