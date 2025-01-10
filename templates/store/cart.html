@@ -37,7 +37,12 @@
                                 <td class="invert">1</td>
                                 <td class="invert-image"><a href="{{i.product.get_url}}">
                                         <img src="{{i.product.product_image.url}}" class="img-fluid radius-image"
-                                            alt=""></a></td>
+                                            alt=""></a>
+                                        <br>
+                                        {{i.product.product_name}}
+                                    </td>
+                                
+
                                 <td class="invert">
                                     <div class="quantity">
                                         <div class="quantity-select">
@@ -51,7 +56,11 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="invert">{{i.product.product_name}}</td>
+                                <td class="invert">
+                                    {% for sc in i.variations.all %}
+                                    {{sc.variation_category}} : {{sc.variation_value}} <br>
+                                    {% endfor %}
+                                </td>
                                 <td class="invert">${{i.product.product_price}} - {{i.sub_total}}</td>
                                 <td class="invert">
                                     <div class="rem">
@@ -136,6 +145,8 @@
         </div>
     </div>
 </section>
+
+
 <!-- //products-->
 <div style="margin: 8px auto; display: block; text-align:center;">
 

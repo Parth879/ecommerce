@@ -37,7 +37,6 @@
             <div class="sp-store-single-page row">
                 <div class="col-lg-5 single-right-left">
                     <div class="flexslider1">
-
                         <ul class="slides">
                             <li data-thumb="assets/images/cart1.jpg">
                                 <div class="thumb-image"> <img src="{{single_product.product_image.url}}"
@@ -61,38 +60,50 @@
 
                 </div>
                 <div class="col-lg-7 single-right-left ps-lg-5">
-                    <h3>{{single_product.product_name}}
-                    </h3>
-                    <div class="caption">
-                        <h6>
-                            <span class="item_price">{{single_product.product_price}}</span>
-                        </h6>
-                    </div>
+                    <form action="{% url 'add_cart' single_product.id %}" method="POST">
+                        {% csrf_token %}
+                        <h3>{{single_product.product_name}}
+                        </h3>
+                        <div class="caption">
+                            <h6>
+                                <span class="item_price">{{single_product.product_price}}</span>
+                            </h6>
+                        </div>
 
-                    <br>
-                    <div class="desc_single mb-4">
-                        <h5>Description:</h5>
-                        <p>{{single_product.product_discription}}</p>
-                    </div>
-                    <div class="eco-buttons mt-5 d-flex">
+                        <br>
+                        <div class="desc_single mb-4">
+                            <h5>Description:</h5>
+                            <p>{{single_product.product_discription}}</p>
+                        </div>
 
-                        {% if single_product.product_stock <= 0 %} 
-                        <h5 class="item_price">Out Of Stock</h5>
-                            {% else %}
-                            <div class="shopv single-item">
-                                {% if in_cart %}
-                                <a href="{% url 'cart'  %}" class="btn btn-style btn-primary">View Cart
-                                </a>
+
+                        <select class="form-select" name="color" required>
+                            <option value="">Select Color</option>
+                            {% for color in single_product.variation_set.colors %}
+                            <option value="{{color.variation_value}}">{{color.variation_value}}</option>
+                            {% endfor%}
+                        </select>
+
+                        <select class="form-select mt-3" name="size" required>
+                            <option value="" selected>Select Size</option>
+                            {% for size in single_product.variation_set.sizes %}
+                            <option value="{{size.variation_value}}">{{size.variation_value}}</option>
+                            {% endfor%}
+                        </select>
+
+                        <div class="eco-buttons mt-5 d-flex">
+
+                            {% if single_product.product_stock <= 0 %} <h5 class="item_price">Out Of Stock</h5>
                                 {% else %}
-                                <a href="{% url 'add_cart' single_product.id %}" class="btn btn-style btn-primary">Add
-                                    to
-                                    Cart </a>
+                                <div class="shopv single-item">
+                                    
+                                    <button type="submit"
+                                        class="btn btn-style btn-primary">Add to Cart </button>
+                                </div>
                                 {% endif %}
-                            </div>
-                            {% endif %}
 
-                    </div>
-                    <!-- <div class="description-apt d-grid mb-4">
+                        </div>
+                        <!-- <div class="description-apt d-grid mb-4">
                         <div class="occasional">
                             <h5 class="sp_title mb-3">Highlights:</h5>
                             <ul class="single_specific">
@@ -129,7 +140,9 @@
                         </form>
                     </div> -->
 
+                    </form>
                 </div>
+
             </div>
         </div>
         <!--//row1-->
