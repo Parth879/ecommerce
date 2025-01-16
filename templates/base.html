@@ -96,10 +96,18 @@
 
                 </div>
                 <ul class="header-search me-lg-4 d-flex">
+
+                    {% if request.user.is_authenticated %}
+                    <li class="get-btn me-2">
+                        <button  class="btn btn-style btn-primary">
+                            <i class="fas fa-user me-lg-2"></i> <span class="btn-texe-inf">{{request.user.first_name}}</span></button>
+                    </li>
+                    {% else %}
                     <li class="get-btn me-2">
                         <a href="{% url 'login' %}" class="btn btn-style btn-primary" title="search">
                             <i class="fas fa-user me-lg-2"></i> <span class="btn-texe-inf">Login</span></a>
                     </li>
+                    {% endif %}
                     <li class="shopvcart galssescart2 cart cart box_1 get-btn">
                         <a href="{% url 'cart' %}" class="btn btn-style btn-primary">
                             <span class="fas fa-shopping-bag me-lg-2"></span> <span class="btn-texe-inf">Cart</span>

@@ -12,6 +12,9 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 
+from django.http import HttpResponse
+from carts.views import _cart_id
+from carts.models import Cart, CartItem
 
 # Create your views here.
 
@@ -65,6 +68,30 @@ def login(request):
         user = auth.authenticate(request,username=username,password=password)
         
         if user is not None:
+
+            try:
+                cart_items = CartItem.objects.filter(cart__cart_id=_cart_id(request))
+                
+                user_cart_product = CartItem.objects.filter(user=user)
+
+                for item in cart_items:
+
+                    products = user_cart_product.filter(
+                        product = item.product,
+                        variations__in = item.variations.all()
+                    ).distinct()
+
+                    if products.exists():
+                        old_product = products.first()
+                        old_product.quantity += item.quantity
+                        old_product.save()
+                    else:
+                        item.user = user
+                        item.cart = None
+                        item.save()
+            except:
+                pass
+
             auth.login(request,user)
             messages.success(request,"Login Success.")
             return redirect('index')
