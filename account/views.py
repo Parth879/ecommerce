@@ -70,31 +70,39 @@ def login(request):
         if user is not None:
 
             try:
-                cart_items = CartItem.objects.filter(cart__cart_id=_cart_id(request))
+                session_cart_id = _cart_id(request)
+                session_cart_items  = CartItem.objects.filter(cart__cart_id=session_cart_id)
                 
-                user_cart_product = CartItem.objects.filter(user=user)
+                user_cart_items = CartItem.objects.filter(user=user)
 
-                for item in cart_items:
+                for session_item in session_cart_items:
 
-                    products = user_cart_product.filter(
-                        product = item.product,
-                        variations__in = item.variations.all()
-                    ).distinct()
-
-                    if products.exists():
-                        old_product = products.first()
-                        old_product.quantity += item.quantity
-                        old_product.save()
+                    matching_item = None
+                    for user_item in user_cart_items:
+                        if (session_item.product == user_item.product and list(session_item.variations.all()) == list(user_item.variations.all())):
+                            matching_item = user_item
+                            break
+                
+                    if matching_item:
+                        matching_item.quantity += session_item.quantity
+                        matching_item.save()
                     else:
-                        item.user = user
-                        item.cart = None
-                        item.save()
-            except:
-                pass
+                        # If no match found, assign the session item to the user
+                        session_item.user = user
+                        session_item.cart = None  # Disassociate from the session cart
+                        session_item.save()
 
+                Cart.objects.filter(cart_id=session_cart_id).delete()
+
+            except Exception as e:
+                print(f"Error merging cart: {e}")
+                pass
+ 
+            
             auth.login(request,user)
+            next_url = request.GET.get('next','index')
             messages.success(request,"Login Success.")
-            return redirect('index')
+            return redirect(next_url)
         else:
             messages.success(request,"Login Again.")
             return redirect('login')
