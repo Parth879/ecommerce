@@ -143,4 +143,20 @@ def cart(request):
 
 @login_required(login_url='login')
 def checkout(request):
-    return render(request,'store/checkout.html')
+    total = 0
+    cart_items = CartItem.objects.filter(user=request.user)
+
+    for i in cart_items:
+        total += (i.product.product_price * i.quantity)
+    
+    tax = (2 * total)/100
+    grand_total = total + tax
+   
+    context = {
+        'cart_items' : cart_items,
+        'total':total,
+        'tax': tax,
+        'grand_total': grand_total,
+    }
+
+    return render(request,'store/checkout.html',context)

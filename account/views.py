@@ -125,3 +125,8 @@ def activate(request,uid64,token):
         return redirect('login')
     else:
         return redirect('register')
+
+
+def logout(request):
+    auth.logout(request)
+    return redirect('login')

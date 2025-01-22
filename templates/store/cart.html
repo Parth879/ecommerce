@@ -15,67 +15,11 @@
     <div class="ecom-contenthny py-5">
         <div class="container py-lg-5">
             <!-- about -->
+            {% if cart_items %}
             <div class="ecom-contenthny-w3lcheckout privacy">
                 <h3>Chec<span>kout</span></h3>
-                <div class="checkout-right">
-                    <p class="mb-5">Your shopping cart contains: <span>3 Products</span></p>
-                    <table class="timetable_sub">
-                        <thead>
-                            <tr>
-                                <th>Product</th>
-                                <th>Quality</th>
-                                <th>Product Name</th>
-
-                                <th>Price</th>
-                                <th>Remove</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for i in cart_items %}
-                            <tr class="rem1">
-                                <td class="invert-image"><a href="{{i.product.get_url}}">
-                                        <img src="{{i.product.product_image.url}}" class="img-fluid radius-image"
-                                            alt=""></a>
-                                        <br>
-                                        {{i.product.product_name}}
-                                    </td>
-                                
-
-                                <td class="invert">
-                                    <div class="quantity">
-                                        <div class="quantity-select">
-                                            <a href="{% url 'remove_cart' i.product.id i.id %}">
-                                                <div class="entry value-minus">&nbsp;</div>
-                                            </a>
-                                            <div class="entry value"><span>{{i.quantity}}</span></div>
-                                            <a href="{% url 'pluse_cart' i.product.id i.id %}">
-                                                <div class="entry value-plus active">&nbsp;</div>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="invert">
-                                    {% for sc in i.variations.all %}
-                                    {{sc.variation_category}} : {{sc.variation_value}} <br>
-                                    {% endfor %}
-                                </td>
-                                <td class="invert">${{i.product.product_price}} - {{i.sub_total}}</td>
-                                <td class="invert">
-                                    <div class="rem">
-                                        <a href="{% url 'remove_cart_item' i.product.id i.id %}">
-                                            <div class="close1"><i class="far fa-window-close"></i> </div>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                            {% endfor %}
-
-
-                        </tbody>
-                    </table>
-                </div>
                 <div class="row checkout-left mt-5">
-                    <div class="col-md-4 checkout-left-basket">
+                    <div class="col-md-3 checkout-left-basket">
                         <h4>Continue to basket</h4>
                         <ul>
                             <li>Price <i>-</i> <span>{{total}} </span></li>
@@ -85,13 +29,74 @@
                             <li>Total <i>-</i> <span>{{grand_total}}</span></li>
                         </ul>
                     </div>
-                    <div class="col-md-8 address_form_agile ps-lg-5">
-                        
-                            <a class="btn btn-style btn-primary" href="{% url 'checkout' %}">Checkout <i
-                                    class="fas fa-arrow-right ms-lg-3 ms-2"></i></a>
+                    <div class="col-md-9 address_form_agile ps-lg-5">
+                        <div class="checkout-right">
+                            <table class="timetable_sub">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Quality</th>
+                                        <th>Product Name</th>
+
+                                        <th>Price</th>
+                                        <th>Remove</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for i in cart_items %}
+                                    <tr class="rem1">
+                                        <td class="invert-image"><a href="{{i.product.get_url}}">
+                                                <img src="{{i.product.product_image.url}}"
+                                                    class="img-fluid radius-image" alt=""></a>
+                                            <br>
+                                            {{i.product.product_name}}
+                                        </td>
+
+
+                                        <td class="invert">
+                                            <div class="quantity">
+                                                <div class="quantity-select">
+                                                    <a href="{% url 'remove_cart' i.product.id i.id %}">
+                                                        <div class="entry value-minus">&nbsp;</div>
+                                                    </a>
+                                                    <div class="entry value"><span>{{i.quantity}}</span></div>
+                                                    <a href="{% url 'pluse_cart' i.product.id i.id %}">
+                                                        <div class="entry value-plus active">&nbsp;</div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="invert">
+                                            {% for sc in i.variations.all %}
+                                            {{sc.variation_category}} : {{sc.variation_value}} <br>
+                                            {% endfor %}
+                                        </td>
+                                        <td class="invert">${{i.product.product_price}} - {{i.sub_total}}</td>
+                                        <td class="invert">
+                                            <div class="rem">
+                                                <a href="{% url 'remove_cart_item' i.product.id i.id %}" onclick="return confirm('Are You Sure You Want to Delete This Product From Cart!')">
+                                                    <div class="close1"><i class="far fa-window-close"></i> </div>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <a class="btn btn-style btn-primary" href="{% url 'checkout' %}">Checkout <i
+                                class="fas fa-arrow-right ms-lg-3 ms-2"></i></a>
                     </div>
                 </div>
             </div>
+            {% else %}
+            <div class="ecom-contenthny-w3lcheckout privacy">
+                <h3>Empty Cart</h3>
+                <a class="btn btn-style btn-primary mt-5" href="{% url 'store' %}">Continue Shopping!<i class="fas fa-arrow-right ms-lg-3 ms-2"></i></a>
+            </div>
+            {% endif %}
             <!-- //about -->
         </div>
     </div>

@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="w3l-ecommerce-main">
+    <!-- /products-->
+    <div class="ecom-contenthny py-5">
+        <div class="container py-lg-5">
+            <!-- about -->
+            <div class="ecom-contenthny-w3lcheckout privacy">
+                <h3>Chec<span>kout</span></h3>
+                <div class="checkout-right">
+                    <p class="mb-5">Your shopping cart contains: <span>3 Products</span></p>
+                    <table class="timetable_sub">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Quality</th>
+                                <th>Product Name</th>
+
+                                <th>Price</th>
+                                <th>Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in cart_items %}
+                            <tr class="rem1">
+                                <td class="invert-image"><a href="{{i.product.get_url}}">
+                                        <img src="{{i.product.product_image.url}}"
+                                            class="img-fluid radius-image" alt=""></a>
+                                    <br>
+                                    {{i.product.product_name}}
+                                </td>
+
+
+                                <td class="invert">
+                                    <div class="quantity">
+                                        <div class="quantity-select">
+                                            
+                                            <div class="entry value"><span>{{i.quantity}}</span></div>
+                                            
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="invert">
+                                    {% for sc in i.variations.all %}
+                                    {{sc.variation_category}} : {{sc.variation_value}} <br>
+                                    {% endfor %}
+                                </td>
+                                <td class="invert">${{i.product.product_price}} - {{i.sub_total}}</td>
+                                <td class="invert">
+                                    <div class="rem">
+                                        <a href="{% url 'remove_cart_item' i.product.id i.id %}">
+                                            <div class="close1"><i class="far fa-window-close"></i> </div>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row checkout-left mt-5">
+                    <div class="col-md-4 checkout-left-basket">
+                        <h4>Continue to basket</h4>
+                        <ul>
+                            <li>Price <i>-</i> <span>{{total}} </span></li>
+                            <li>Tax-</i> <span>{{tax}} </span></li>
+                            <li><span> </span></li>
+                            <li> <span></span></li>
+                            <li>Total <i>-</i> <span>{{grand_total}}</span></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-8 address_form_agile ps-lg-5">
+                        <h4>Add a new Details</h4>
+                        <form action="{% url 'place_order' %}" method="post" class="creditly-card-form agileinfo_form mt-4">
+                            {% csrf_token %}
+                            <section class="creditly-wrapper wthree, w3_agileits_wrapper">
+                                <div class="information-wrapper">
+                                    <div class="first-row form-group">
+                                        <div class="controls">
+                                            <input class="billing-address-name form-control" type="text" name="first_name"
+                                                placeholder="First name" required>
+                                        </div>
+                                        <div class="controls">
+                                            <input class="billing-address-name form-control" type="text" name="last_name"
+                                                placeholder="Last name" required>
+                                        </div>
+                                        <div class="controls">
+                                            <input class="billing-address-name form-control" type="text" name="address_line_1"
+                                                placeholder="Address Line 1" required>
+                                        </div>
+                                        <div class="controls">
+                                            <input class="billing-address-name form-control" type="text" name="address_line_2"
+                                                placeholder="Address Line 2">
+                                        </div>
+                                        <div class="controls">
+                                            <input class="billing-address-name form-control" type="text" name="country"
+                                                placeholder="Country" required>
+                                        </div>
+                                        <div class="controls">
+                                            <input class="billing-address-name form-control" type="text" name="state"
+                                                placeholder="State" required>
+                                        </div>
+                                        <div class="controls">
+                                            <input class="billing-address-name form-control" type="text" name="city"
+                                                placeholder="City" required>
+                                        </div>
+                                        <div class="controls">
+                                            <input class="billing-address-name form-control" type="text" name="order_note"
+                                                placeholder="Order Note">
+                                        </div>
+                                        
+                                    </div>
+                                    <button class="submit check_out btn btn-style btn-primary">Delivery to this
+                                        Address</button>
+                                </div>
+                            </section>
+                        </form>
+                        
+                    </div>
+                </div>
+            </div>
+            <!-- //about -->
+        </div>
+    </div>
+</section>
+{% endblock %}
