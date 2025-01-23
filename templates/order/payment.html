@@ -121,7 +121,7 @@
             fetch("{% url 'payment' %}",{
                 method :"POST",
                 headers :{
-                    "Content-type":"application/json",
+                    "Content-Type":"application/json",
                     "X-CSRFToken":"{{csrf_token}}",
                 },
                 body : JSON.stringify({
@@ -130,9 +130,10 @@
                     "Order":"{{order}}",
                 })
             })
-            .than(response => response.json())
-            .than(data => {
-                if(data.sucess) {
+            .then(response => response.json())
+            .then(data => {
+                if(data.success) {
+                    
                     alert("Payment Success")
                 }
                 else{

@@ -10,15 +10,12 @@ from django.http import JsonResponse
 from store.models import Product
 
 # Create your views here.
-@csrf_exempt
 def payment(request):
     data = json.loads(request.body)
 
     payment_id = data["razorpay_payment_id"]
 
-    print(data['Order'])
     order = Order.objects.get(user=request.user,is_ordered=False,order_number=data['Order'])
-    print(order)
 
     try:
         payment = Payment(
@@ -51,14 +48,15 @@ def payment(request):
             parchsedproduct.variations.set(item.variations.all())
             parchsedproduct.save()
 
+            product_q = item.product
+            product_q.product_stock -= item.quantity
+            product_q.save()
 
         cart_item.delete()
-        print("hr")
-
-        ds = {
-            "sucess":True,
+        data = {
+            "success":True,
         }
-        return JsonResponse(ds)
+        return JsonResponse(data)
     except:
         pass
 
