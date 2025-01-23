@@ -3,7 +3,7 @@ from account.forms import RegistrationForm
 from account.models import Account
 from django.contrib import auth
 from django.contrib import messages
-
+from django.contrib.auth.decorators import login_required
 # Email
 from django.core.mail import EmailMessage
 from django.contrib.sites.shortcuts import get_current_site
@@ -15,6 +15,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.http import HttpResponse
 from carts.views import _cart_id
 from carts.models import Cart, CartItem
+from orders.models import Order
 
 # Create your views here.
 
@@ -130,3 +131,13 @@ def activate(request,uid64,token):
 def logout(request):
     auth.logout(request)
     return redirect('login')
+
+
+@login_required(login_url='login')
+def UserDashboard(request):
+
+    orders = Order.objects.filter(user=request.user)
+    context = {
+        'orders':orders
+    }
+    return render(request,'accounts/user_dashboard.html',context)

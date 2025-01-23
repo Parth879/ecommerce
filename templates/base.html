@@ -99,8 +99,8 @@
 
                     {% if request.user.is_authenticated %}
                     <li class="get-btn me-2">
-                        <button  class="btn btn-style btn-primary">
-                            <i class="fas fa-user me-lg-2"></i> <span class="btn-texe-inf">{{request.user.first_name}}</span></button>
+                        <a href="{% url 'UserDashboard' %}"  class="btn btn-style btn-primary">
+                            <i class="fas fa-user me-lg-2"></i> <span class="btn-texe-inf">{{request.user.first_name}}</span></a>
                     </li>
                     {% else %}
                     <li class="get-btn me-2">

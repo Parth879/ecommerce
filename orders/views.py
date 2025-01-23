@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
+from account.models import Account
 from carts.models import CartItem
 from orders.models import Order,OrderProduct,Payment
 from datetime import date
@@ -9,12 +10,21 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 from store.models import Product
 
+# Email
+from django.core.mail import EmailMessage
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from django.contrib.auth.tokens import default_token_generator
+
+
 # Create your views here.
 def payment(request):
     data = json.loads(request.body)
 
     payment_id = data["razorpay_payment_id"]
-
+    useremail = request.user.email
     order = Order.objects.get(user=request.user,is_ordered=False,order_number=data['Order'])
 
     try:
@@ -53,10 +63,26 @@ def payment(request):
             product_q.save()
 
         cart_item.delete()
+        try:
+                email_subject = "Thank Your For Your Order."
+                current_side = get_current_site(request)
+                context = {
+                    'user':request.user,
+                    'domain' : current_side,
+                    'Order' : order,
+                }
+                message = render_to_string('order/order_confirm.html',context)
+                send_email = EmailMessage(email_subject,message,to=[useremail])
+                send_email.send()
+        except:
+            pass
         data = {
             "success":True,
+            "OrderId":order.order_number,
         }
+        
         return JsonResponse(data)
+        
     except:
         pass
 
@@ -72,6 +98,7 @@ def place_order(request):
     if request.method == 'POST':
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
+        
         address_line_1 = request.POST['address_line_1']
         address_line_2 = request.POST['address_line_2']
         country = request.POST['country']
@@ -89,7 +116,7 @@ def place_order(request):
             state = state,
             city = city,
             order_note = order_note,
-            total = total,
+            total = grand_total,
             tax = tax,
             ip = request.META.get('REMOTE_ADDR')
         )
@@ -122,3 +149,13 @@ def place_order(request):
         }
 
         return render(request,'order/payment.html',context)
+    
+
+def order_complete(request):
+    try:
+        orderid = request.GET.get("ordernumber")
+        order = Order.objects.get(order_number=orderid)
+        print(order)
+    except:
+        pass
+    return render(request,'order/order_complete.html',{'order':order})
