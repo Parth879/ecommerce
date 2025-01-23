@@ -136,7 +136,7 @@ def logout(request):
 @login_required(login_url='login')
 def UserDashboard(request):
 
-    orders = Order.objects.filter(user=request.user)
+    orders = Order.objects.filter(user=request.user).all()
     context = {
         'orders':orders
     }
