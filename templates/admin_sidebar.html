@@ -1,0 +1,18 @@
+<aside class="pe-lg-4">
+    <div class="sider-bar">
+        <!-- /Gallery-imgs -->
+
+        <div class="single-gd mb-5">
+
+            <a href="{% url 'UserDashboard' %}" class="btn btn-style {% if 'UserDashboard' in request.path %} btn-outline-primary {% else %} {% endif %}"><i class="fas fa-money-bill"></i> Dashboard</a>
+        </div>
+
+        <div class="single-gd mb-5">
+            <a class="btn btn-style "><i class="fas fa-money-bill"></i> Change
+                Password</a>
+        </div>
+        <div class="single-gd mb-5">
+            <a href="{% url 'UserOrders' %}" class="btn btn-style {% if 'UserOrders' in request.path %} btn-outline-primary {% else %} {% endif %}"><i class="fas fa-money-bill"></i> Orders</a>
+        </div>
+    </div>
+</aside>

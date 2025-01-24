@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="w3l-ecommerce-main">
+    <!-- /products-->
+    <div class="ecom-contenthny py-5">
+        <div class="container py-lg-5">
+            <!-- about -->
+            <div class="ecom-contenthny-w3lcheckout privacy">
+                <h3>Order Detils </h3>
+                <div class="checkout-right">
+                    <table class="timetable_sub">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Product Name</th>
+                                <th>Quality</th>
+                                <th>Product Name</th>
+
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in orderdetials %}
+                            <tr class="rem1">
+                                <td class="invert-image"><a href="{{i.product.get_url}}">
+                                        <img src="{{i.product.product_image.url}}" class="img-fluid radius-image"
+                                            alt=""></a>
+                                </td>
+
+
+                                <td class="invert">
+                                    {{i.product.product_name}}
+                                </td>
+                                <td class="invert">
+                                    {{i.quantity}}
+                                </td>
+                                <td class="invert">
+                                    {% for sc in i.variations.all %}
+                                    {{sc.variation_category}} : {{sc.variation_value}} <br>
+                                    {% endfor %}
+                                </td>
+                                <td class="invert">{{i.product.product_price}} each
+                                    <br>- {{i.sub_total}}
+                                </td>
+                            </tr>
+                            {% endfor %}
+
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row checkout-left mt-5">
+                    <div class="col-md-4 checkout-left-basket">
+                        <h4>Totals</h4>
+                        <ul>
+                            <li>Price <i>-</i> <span>{{other_dettails.total}} </span></li>
+                            <li>Tax-</i> <span>{{other_dettails.tax}} </span></li>
+                            <li><span> </span></li>
+                            <li> <span></span></li>
+                            <li>Total <i>-</i> <span>{{payment_details.amount_paid}}</span></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 checkout-left-basket">
+                        <h4>Payment Details</h4>
+                        <h5>
+                            payment Id =
+                            <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{payment_details.payment_id}}
+                        </h5>
+                        
+                    </div>
+                    <div class="col-md-4 checkout-left-basket">
+                        <h4>Address </h4>
+                        <h5>
+                            {{other_dettails.address_line_1}}
+                            {{other_dettails.address_line_2}},
+                            {{other_dettails.country}},
+                            {{other_dettails.state}},
+                            {{other_dettails.city}}.
+                        </h5>
+
+                    </div>
+
+                </div>
+            </div>
+            <!-- //about -->
+        </div>
+    </div>
+</section>
+{% endblock %}

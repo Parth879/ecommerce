@@ -1,11 +1,31 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<section class="w3l-ecommerce-main">
+    <!-- /products-->
+    <div class="ecom-contenthny w3l-ecommerce-main-inn py-5">
+        <div class="container py-lg-5">
+            <div class="ecommerce-grids row">
+                <div class="ecommerce-left-hny col-lg-4">
+                    {% include 'admin_sidebar.html' %}
+                </div>
+                <!-- /row-->
+                <div class="ecommerce-right-hny col-lg-8">
+                    <div class="row ecomhny-topbar">
+                        <form action="" method="post"
+                            class="creditly-card-form agileinfo_form mt-4">
+                            {% csrf_token %}
+                            {{user.as_p}}
+                            <img src="" alt="">
+                            {{profile.profile_image}}
+                        </form>
+                    </div>
+                </div>
+            </div>
 
-{{request.user.first_name}}
-
-{% for i in orders %}
-    {{i.order_number}}
-{% endfor %}
-
+        </div>
+    </div>
+</section>
+<!-- //products-->
+<div style="margin: 8px auto; display: block; text-align:center;"></div>
 {% endblock %}

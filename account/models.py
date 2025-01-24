@@ -59,6 +59,9 @@ class Account(AbstractBaseUser):
     def has_module_perms(self, add_label):
         return True
     
+    def full_name(self):
+        return self.first_name + self.last_name
+    
 class UserProfile(models.Model):
     user = models.OneToOneField(Account, on_delete=models.CASCADE)
     profile_image =  models.ImageField(upload_to="Profile_Pic")

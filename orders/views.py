@@ -116,7 +116,7 @@ def place_order(request):
             state = state,
             city = city,
             order_note = order_note,
-            total = grand_total,
+            total = total,
             tax = tax,
             ip = request.META.get('REMOTE_ADDR')
         )

@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
-from account.forms import RegistrationForm
-from account.models import Account
+from account.forms import RegistrationForm, AccountForm, ProfileForm
+from account.models import Account, UserProfile
 from django.contrib import auth
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -15,7 +15,8 @@ from django.contrib.auth.tokens import default_token_generator
 from django.http import HttpResponse
 from carts.views import _cart_id
 from carts.models import Cart, CartItem
-from orders.models import Order
+from orders.models import Order, OrderProduct, Payment
+
 
 # Create your views here.
 
@@ -130,14 +131,45 @@ def activate(request,uid64,token):
 
 def logout(request):
     auth.logout(request)
+    messages.info(request,'Logout Success! Login Again')
     return redirect('login')
 
 
 @login_required(login_url='login')
 def UserDashboard(request):
+    user = request.user
+    accounts = AccountForm(instance=user)   
+    
+    profile_user = UserProfile.objects.get(user=user)
+    profile = ProfileForm(instance=profile_user)
 
-    orders = Order.objects.filter(user=request.user).all()
+    context = {
+        "user":accounts,
+        "profile":profile
+    }
+
+    return render(request,'accounts/user_dashboard.html',context)
+
+@login_required(login_url='login')
+def UserOrders(request):
+    orders = Order.objects.filter(user=request.user).order_by('-created_at')
     context = {
         'orders':orders
     }
-    return render(request,'accounts/user_dashboard.html',context)
+    return render(request,'accounts/user_order.html',context)
+
+
+def UserOrderDetails(request, ordeid):
+    other_dettails = Order.objects.get(id=ordeid)
+
+    orderdetials = OrderProduct.objects.filter(order=other_dettails)
+
+    payment_details = Payment.objects.get(payment_id=other_dettails.payment)
+
+
+    context = {
+        "orderdetials":orderdetials,
+        "other_dettails":other_dettails,
+        "payment_details":payment_details
+    }
+    return render(request,'accounts/user_order_details.html', context)

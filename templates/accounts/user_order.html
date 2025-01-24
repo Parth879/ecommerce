@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="w3l-ecommerce-main">
+    <!-- /products-->
+    <div class="ecom-contenthny w3l-ecommerce-main-inn py-5">
+        <div class="container py-lg-5">
+            <div class="ecommerce-grids row">
+                <div class="ecommerce-left-hny col-lg-4">
+                    {% include 'admin_sidebar.html' %}
+                </div>
+                <!-- /row-->
+                <div class="ecommerce-right-hny col-lg-8">
+                    <div class="row ecomhny-topbar">
+                        <table class="timetable_sub">
+                            <thead>
+                                <tr>
+                                    <th>Order</th>
+                                    <th>Order Date </th>
+                                    <th>Total Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for i in orders %}
+                                <tr class="rem1">
+                                    <td class="invert-image">
+                                        <a href="{% url 'UserOrderDetails' i.id %}">{{i.order_number}}</a>
+                                        
+                                    </td>
+
+
+                                    <td class="invert">
+                                       {{i.created_at}}
+                                    </td>
+                                    <td class="invert">
+                                        {{i.total}}
+                                    </td>
+                                    
+                                </tr>
+                                {% endfor %}
+
+
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- //products-->
+<div style="margin: 8px auto; display: block; text-align:center;"></div>
+{% endblock %}
